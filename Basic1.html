@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Live Text Update</title>
+</head>
+<body>
+  <input type="text" id="textbox" placeholder="Type something..." />
+  <p id="output"></p>
+
+  <script>
+    const textbox = document.getElementById("textbox"); 
+    const output = document.getElementById("output"); 
+    textbox.addEventListener("input", function () {
+      output.textContent = textbox.value; 
+    });
+  </script>
+</body>
+</html>

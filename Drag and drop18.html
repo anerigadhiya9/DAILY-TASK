@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <title>Drag and Drop Tables</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        table {
+            width: 30%;
+            margin: 10px;
+            border-collapse: collapse;
+            float: left;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        .table-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .dropdown-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .product-item {
+            cursor: grab;
+        }
+
+        .table-placeholder {
+            height: 30px;
+            background-color: #e0e0e0;
+            border: 1px dashed #999;
+        }
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let draggedRow = null;
+
+            const rows = document.querySelectorAll(".product-item");
+            rows.forEach(row => {
+                row.setAttribute("draggable", "true");
+
+                row.addEventListener("dragstart", function(event) {
+                    draggedRow = row;
+                    event.dataTransfer.setData("text", row.dataset.productId);
+                    setTimeout(function() {
+                        row.style.display = "none";
+                    }, 0);
+                });
+
+                row.addEventListener("dragend", function() {
+                    setTimeout(function() {
+                        draggedRow.style.display = "table-row";
+                        draggedRow = null;
+                    }, 0);
+                });
+            });
+
+            const tables = document.querySelectorAll("table tbody");
+            tables.forEach(table => {
+                table.addEventListener("dragover", function(event) {
+                    event.preventDefault();
+                    const afterElement = getDragAfterElement(table, event.clientY);
+                    const draggedRowClone = draggedRow.cloneNode(true);
+                    if (afterElement == null) {
+                        table.appendChild(draggedRowClone);
+                    } else {
+                        table.insertBefore(draggedRowClone, afterElement);
+                    }
+                });
+
+                table.addEventListener("drop", function(event) {
+                    event.preventDefault();
+                    const targetRow = event.target.closest("tr");
+                    if (targetRow && targetRow !== draggedRow) {
+                        targetRow.insertAdjacentElement("beforebegin", draggedRow);
+                    }
+                });
+            });
+
+            function getDragAfterElement(container, y) {
+                const draggableElements = [...container.querySelectorAll("tr")];
+                return draggableElements.reduce((closest, child) => {
+                    const box = child.getBoundingClientRect();
+                    const offset = y - box.top - box.height / 2;
+                    if (offset < 0 && offset > closest.offset) {
+                        return { offset: offset, element: child };
+                    } else {
+                        return closest;
+                    }
+                }, { offset: Number.NEGATIVE_INFINITY }).element;
+            }
+
+
+            const dropdowns = document.querySelectorAll(".dropdown");
+            dropdowns.forEach(dropdown => {
+                dropdown.addEventListener("change", function() {
+                    const productId = this.dataset.productId;
+                    const targetTable = this.value;
+
+                    if (targetTable) {
+                        const row = document.querySelector(`tr[data-product-id='${productId}']`);
+                        const targetTbody = document.querySelector(`#${targetTable} tbody`);
+                        targetTbody.appendChild(row); 
+                        this.value = ""; 
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+
+    <div class="table-container">
+        <table id="productList">
+            <thead>
+                <tr>
+                    <th>Product List</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="product-item" data-product-id="1">
+                    <td>Product 1</td>
+                </tr>
+                <tr class="product-item" data-product-id="2">
+                    <td>Product 2</td>
+                </tr>
+                <tr class="product-item" data-product-id="3">
+                    <td>Product 3</td>
+                </tr>
+            </tbody>
+        </table>
+        <table id="category1">
+            <thead>
+                <tr>
+                    <th>Category 1</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+        <table id="category2">
+            <thead>
+                <tr>
+                    <th>Category 2</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="dropdown-container">
+        <h3>Move Products with Dropdown</h3>
+        <select class="dropdown" data-product-id="1">
+            <option value="" selected>Select Target Table for Product 1</option>
+            <option value="productList">Product List</option>
+            <option value="category1">Category 1</option>
+            <option value="category2">Category 2</option>
+        </select>
+
+        <select class="dropdown" data-product-id="2">
+            <option value="" selected>Select Target Table for Product 2</option>
+            <option value="productList">Product List</option>
+            <option value="category1">Category 1</option>
+            <option value="category2">Category 2</option>
+        </select>
+
+        <select class="dropdown" data-product-id="3">
+            <option value="" selected>Select Target Table for Product 3</option>
+            <option value="productList">Product List</option>
+            <option value="category1">Category 1</option>
+            <option value="category2">Category 2</option>
+        </select>
+    </div>
+
+</body>
+</html>

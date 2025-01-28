@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Increment and Decrement</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .value {
+            font-size: 24px;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Increment and Decrement Value</h2>
+
+    <button id="decrementBtn">Decrement</button>
+    <span class="value" id="valueDisplay">0</span>
+    <button id="incrementBtn">Increment</button>
+
+    <script>
+        let value = 0;
+        const decrementBtn = document.getElementById("decrementBtn");
+        const incrementBtn = document.getElementById("incrementBtn");
+        const valueDisplay = document.getElementById("valueDisplay");
+
+        function updateValue() {
+            valueDisplay.textContent = value;
+        }
+        incrementBtn.addEventListener("click", () => {
+            value++;
+            updateValue();
+        });
+
+        decrementBtn.addEventListener("click", () => {
+            value--;
+            updateValue();
+        });
+    </script>
+
+</body>
+</html>

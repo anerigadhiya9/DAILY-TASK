@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <title>RGB Color Chooser</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      text-align: center;
+    }
+
+    .preview-box {
+      width: 200px;
+      height: 200px;
+      border: 1px solid #ccc;
+      margin: 0 auto;
+    }
+
+    .slider-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    input[type='range'] {
+      width: 200px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>RGB Color Chooser</h1>
+
+    <div class="preview-box" id="preview"></div>
+
+    <div class="slider-container">
+      <label for="red">R:</label>
+      <input type="range" id="red" min="0" max="255" value="0" />
+      <span id="red-value">0</span>
+    </div>
+
+    <div class="slider-container">
+      <label for="green">G:</label>
+      <input type="range" id="green" min="0" max="255" value="0" />
+      <span id="green-value">0</span>
+    </div>
+
+    <div class="slider-container">
+      <label for="blue">B:</label>
+      <input type="range" id="blue" min="0" max="255" value="0" />
+      <span id="blue-value">0</span>
+    </div>
+  </div>
+
+  <script>
+    const redSlider = document.getElementById('red');
+    const greenSlider = document.getElementById('green');
+    const blueSlider = document.getElementById('blue');
+
+    const redValue = document.getElementById('red-value');
+    const greenValue = document.getElementById('green-value');
+    const blueValue = document.getElementById('blue-value');
+
+    const previewBox = document.getElementById('preview');
+
+    function updateColor() {
+      const r = redSlider.value;
+      const g = greenSlider.value;
+      const b = blueSlider.value;
+
+      redValue.textContent = r;
+      greenValue.textContent = g;
+      blueValue.textContent = b;
+
+      previewBox.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+    }
+
+    redSlider.addEventListener('input', updateColor);
+    greenSlider.addEventListener('input', updateColor);
+    blueSlider.addEventListener('input', updateColor);
+
+    updateColor();
+  </script>
+</body>
+</html>

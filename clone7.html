@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clone and Append Lists</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .list-container {
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style-type: none; 
+            padding: 0;
+        }
+
+        li {
+            margin: 5px 0;
+        }
+
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="list-container">
+        <h3>Original List</h3>
+        <ul id="list1">
+            <li>Milk</li>
+            <li>Cofee</li>
+            <li>Tea</li>
+        </ul>
+    </div>
+
+    <div class="list-container">
+        <h3>Second List (Initially Empty)</h3>
+        <ul id="list2">
+            
+        </ul>
+    </div>
+
+    <button id="cloneButton">Clone </button>
+
+    <script>
+        const list1 = ["Milk", "Coffee", "Tea"];
+        const list2 = [];
+
+        const list1Element = document.getElementById("list1");
+        const list2Element = document.getElementById("list2");
+        const cloneButton = document.getElementById("cloneButton");
+
+        function renderList(list, element) {
+            element.innerHTML = ''; 
+            list.forEach(item => {
+                const li = document.createElement("li");
+                li.textContent = item;
+                element.appendChild(li);
+            });
+        }
+
+        function cloneLastItem() {
+            if (list1.length > 0) {
+                const lastItem = list1[list1.length - 1];
+                list2.push(lastItem);
+
+                renderList(list2, list2Element);
+            }
+        }
+
+        cloneButton.addEventListener("click", cloneLastItem);
+
+        renderList(list1, list1Element);
+    </script>
+
+</body>
+</html>

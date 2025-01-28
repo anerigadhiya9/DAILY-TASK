@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Live Text Update</title>
+</head>
+<body>
+  <label for="price">Price:</label>
+  <input type="number" id="price" oninput="calculateTotal()" />
+
+  <label for="quantity">Quantity:</label>
+  <input type="number" id="quantity" oninput="calculateTotal()" />
+  <p id="result">Total: 0</p>
+
+  <script>
+    function calculateTotal() {
+      const price = parseFloat(document.getElementById('price').value);
+      const quantity = parseFloat(document.getElementById('quantity').value);
+      const total = price * quantity;
+      document.getElementById('result').innerText = `Total: ${total}`;
+    }
+  </script>
+</body>
+</html>
+

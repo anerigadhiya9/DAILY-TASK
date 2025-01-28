@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Increment/Decrement Counter</title>
+
+    <style>
+        .counter-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .counter-box {
+            text-align: center;
+            margin: 10px;
+        }
+
+        .counter-box button {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        .counter-box span {
+            display: block;
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const counter1 = document.getElementById('counter1');
+            const counter2 = document.getElementById('counter2');
+
+            const counterValue1 = counter1.querySelector('.counter-value');
+            const counterValue2 = counter2.querySelector('.counter-value');
+
+            const incrementBtn1 = document.getElementById('incrementRow1');
+            const decrementBtn1 = document.getElementById('decrementRow1');
+
+            const incrementBtn2 = document.getElementById('incrementRow2');
+            const decrementBtn2 = document.getElementById('decrementRow2');
+
+            let value1 = parseInt(counterValue1.textContent, 10) || 0;
+            let value2 = parseInt(counterValue2.textContent, 10) || 0;
+
+            incrementBtn1.addEventListener('click', function() {
+                value1++;
+                counterValue1.textContent = value1;
+            });
+            decrementBtn1.addEventListener('click', function() {
+                if (value1 > 0) {
+                    value1--;
+                    counterValue1.textContent = value1;
+                }
+            });
+
+            incrementBtn2.addEventListener('click', function() {
+                value2++;
+                counterValue2.textContent = value2;
+            });
+
+            decrementBtn2.addEventListener('click', function() {
+                if (value2 > 0) {
+                    value2--;
+                    counterValue2.textContent = value2;
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+
+    <div class="counter-container">
+    
+        <div id="counter1" class="counter-box" data-counter="0">
+            <span class="counter-value">0</span>
+            <button id="incrementRow1">Increment Row 1</button>
+            <button id="decrementRow1">Decrement Row 1</button>
+        </div>
+
+        <div id="counter2" class="counter-box" data-counter="0">
+            <span class="counter-value">0</span>
+            <button id="incrementRow2">Increment Row 2</button>
+            <button id="decrementRow2">Decrement Row 2</button>
+        </div>
+    </div>
+
+</body>
+</html>

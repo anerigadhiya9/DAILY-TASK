@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dynamic Country, State, and City Dropdowns</title>
+    <style>
+        select {
+            margin: 10px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Select Country, State, and City</h1>
+
+    <form id="location-form">
+        <select name="country" id="country" onchange="updateStates()">
+            <option value="">Select Country</option>
+        </select>
+
+        <select name="state" id="state" onchange="updateCities()">
+            <option value="">Select State</option>
+        </select>
+
+        <select name="city" id="city">
+            <option value="">Select City</option>
+        </select>
+    </form>
+
+    <script>
+        const data = {
+            "USA": {
+                "California": ["Los Angeles", "San Francisco", "San Diego"],
+                "Texas": ["Houston", "Austin", "Dallas"]
+            },
+            "India": {
+                "Maharashtra": ["Mumbai", "Pune", "Nagpur"],
+                "Karnataka": ["Bangalore", "Mysore", "Hubli"]
+            },
+            "Canada": {
+                "Ontario": ["Toronto", "Ottawa", "Hamilton"],
+                "Quebec": ["Montreal", "Quebec City", "Sherbrooke"]
+            }
+        };
+
+        function populateCountries() {
+            const countrySelect = document.getElementById("country");
+            for (const country in data) {
+                const option = document.createElement("option");
+                option.value = country;
+                option.text = country;
+                countrySelect.appendChild(option);
+            }
+        }
+
+    
+        function updateStates() {
+            const countrySelect = document.getElementById("country");
+            const stateSelect = document.getElementById("state");
+            const selectedCountry = countrySelect.value;
+
+            stateSelect.innerHTML = '<option value="">Select State</option>';
+            document.getElementById("city").innerHTML = '<option value="">Select City</option>'; // Clear city dropdown
+
+            if (selectedCountry) {
+                const states = data[selectedCountry];
+                for (const state in states) {
+                    const option = document.createElement("option");
+                    option.value = state;
+                    option.text = state;
+                    stateSelect.appendChild(option);
+                }
+            }
+        }
+
+        function updateCities() {
+            const stateSelect = document.getElementById("state");
+            const citySelect = document.getElementById("city");
+            const selectedCountry = document.getElementById("country").value;
+            const selectedState = stateSelect.value;
+
+            citySelect.innerHTML = '<option value="">Select City</option>';
+
+            if (selectedState) {
+                const cities = data[selectedCountry][selectedState];
+                for (const city of cities) {
+                    const option = document.createElement("option");
+                    option.value = city;
+                    option.text = city;
+                    citySelect.appendChild(option);
+                }
+            }
+        }
+
+        window.onload = function() {
+            populateCountries();
+        };
+    </script>
+
+</body>
+</html>
