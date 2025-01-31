@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Converter</title>
+</head>
+<body>
+  <label for="converter">Select Converter:</label>
+  <select id="converter" onchange="toggleConverter()">
+    <option value="temperature">Temperature</option>
+    <option value="time">Time</option>
+  </select>
+
+  <div id="converterContainer"> 
+    <input type="number" id="input1" placeholder="Celsius" oninput="convert('input1')" />
+    <input type="number" id="input2" placeholder="Fahrenheit" oninput="convert('input2')" />
+  </div>
+
+  <script>
+    function toggleConverter() {
+      const isTemperature = document.getElementById('converter').value === 'temperature';
+      document.getElementById('input1').placeholder = isTemperature ? 'Celsius' : 'Seconds';
+      document.getElementById('input2').placeholder = isTemperature ? 'Fahrenheit' : 'Minutes';
+      document.getElementById('input1').value = "";
+      document.getElementById('input2').value = "";
+    }
+    function convert(source) {
+      let input1 = document.getElementById('input1');
+      let input2 = document.getElementById('input2');
+
+      if (document.getElementById('converter').value === 'temperature') {
+        if (source === 'input1') {
+          input2.value = input1.value !== "" ? ((parseFloat(input1.value) * 9 / 5) + 32).toFixed(2) : "";
+        } else {
+          input1.value = input2.value !== "" ? ((parseFloat(input2.value) - 32) * 5 / 9).toFixed(2) : "";
+        }
+      } else {
+        if (source === 'input1') {
+          input2.value = input1.value !== "" ? (parseFloat(input1.value) / 60).toFixed(2) : "";
+        } else {
+          input1.value = input2.value !== "" ? (parseFloat(input2.value) * 60).toFixed(2) : "";
+        }
+      }
+    }
+    toggleConverter(); 
+  </script>     
+
+</body>
+</html>

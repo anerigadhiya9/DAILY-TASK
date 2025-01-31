@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Converter</title>
+</head>
+<body>
+
+  <label for="converter">Select Converter:</label>
+  <select id="converter" onchange="toggleConverter()">
+    <option value="temperature">Temperature</option>
+    <option value="time">Time</option>
+  </select>
+
+  <div id="converterContainer">
+    <input type="number" id="input1" oninput="convert()" />
+    <input type="number" id="input2" oninput="convert()" />
+  </div>
+
+  <script>
+    function toggleConverter() {
+      const isTemperature = document.getElementById('converter').value === 'temperature';
+      document.getElementById('input1').placeholder = isTemperature ? 'Celsius' : 'Seconds';
+      document.getElementById('input2').placeholder = isTemperature ? 'Fahrenheit' : 'Minutes';
+    }
+    function convert() {
+      const input1 = parseFloat(document.getElementById('input1').value) || 0;
+      const input2 = document.getElementById('input2').value;
+      
+      if (document.getElementById('converter').value === 'temperature') {
+        document.getElementById('input2').value = ((input1 * 9 / 5) + 32).toFixed(2); 
+      } else {
+        document.getElementById('input2').value = (input1 / 60).toFixed(2);
+      }
+    }
+    toggleConverter(); 
+  </script>     
+</body>
+</html>

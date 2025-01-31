@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Clone Increment-Decrement Div</title>
+  <style>
+    .counter {
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <button onclick="cloneCounter(0)">Clone</button>
+  <div id="container">
+    <div class="counter">
+      <button onclick="decrement(this)">-</button>
+      <span class="count">0</span>
+      <button onclick="increment(this)">+</button>
+    </div>
+  </div>
+  <script>
+    function increment(button) {
+      let countSpan = button.previousElementSibling;
+      countSpan.textContent = parseInt(countSpan.textContent) + 1;
+    }
+
+    function decrement(button) {
+      let countSpan = button.nextElementSibling;
+      countSpan.textContent = parseInt(countSpan.textContent) - 1;
+    }
+
+    function cloneCounter(initialValue) {
+      const container = document.getElementById("container");
+      const newCounter = container.firstElementChild.cloneNode(true);
+      newCounter.querySelector(".count").textContent = initialValue; 
+      container.appendChild(newCounter);
+    }
+  </script>
+</body>
+</html>
+  

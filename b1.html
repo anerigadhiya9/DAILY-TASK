@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Clone Increment-Decrement Div</title>
+  <style>
+    .counter {
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <button onclick="cloneCounter()">Clone Counter</button>
+  <div id="container">
+    <div class="counter"></div>
+      <button onclick="this.nextElementSibling.textContent--">-</button>
+      <span class="count">0</span>
+      <button onclick="this.previousElementSibling.textContent++">+</button>
+    </div>
+  </div>
+  <script>
+    function cloneCounter() {
+      const container = document.getElementById("container");
+      const newCounter = container.firstElementChild.cloneNode(true);
+      newCounter.querySelector(".count").textContent = "0"; 
+      container.appendChild(newCounter);
+    }
+  </script>
+</body>
+</html>
