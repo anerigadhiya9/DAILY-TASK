@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Converter</title>
+</head>
+<body>
+  <label for="converter">Select Converter:</label>
+  <select id="converter" onchange="toggleConverter()">
+    <option value="temperature">Temperature</option>
+    <option value="time">Time</option>
+  </select>
+
+  <div id="converterContainer">
+    <label>Converter: 
+      <input type="number" id="celsius" placeholder="Celsius" oninput="convertValue('temperature', 'C')" />
+      <input type="number" id="fahrenheit" placeholder="Fahrenheit" oninput="convertValue('temperature', 'F')" />
+      <input type="number" id="seconds" placeholder="Seconds" oninput="convertValue('time', 'S')" />
+      <input type="number" id="minutes" placeholder="Minutes" oninput="convertValue('time', 'M')" />
+    </label>
+  </div>
+
+ <script>
+    function toggleConverter() {
+      const converter = document.getElementById('converter').value;
+      const celsiusInput = document.getElementById('celsius');
+      const fahrenheitInput = document.getElementById('fahrenheit');
+      const secondsInput = document.getElementById('seconds');
+      const minutesInput = document.getElementById('minutes');
+
+      if (converter === 'temperature') {
+        celsiusInput.style.display = 'inline';
+        fahrenheitInput.style.display = 'inline';
+        secondsInput.style.display = 'none';
+        minutesInput.style.display = 'none';
+      } else if (converter === 'time') {
+        celsiusInput.style.display = 'none';
+        fahrenheitInput.style.display = 'none';
+        secondsInput.style.display = 'inline';
+        minutesInput.style.display = 'inline';
+      }
+    }
+
+    function convertValue(category, type) {
+      const celsiusInput = document.getElementById('celsius');
+      const fahrenheitInput = document.getElementById('fahrenheit');
+      const secondsInput = document.getElementById('seconds');
+      const minutesInput = document.getElementById('minutes');
+
+      if (category === 'temperature') {
+        const celsius = parseFloat(celsiusInput.value) || 0;
+        const fahrenheit = parseFloat(fahrenheitInput.value) || 0;
+        if (type === 'C') {
+          fahrenheitInput.value = ((celsius * 9) / 5 + 32).toFixed(2);
+        } else if (type === 'F') {
+          celsiusInput.value = (((fahrenheit - 32) * 5) / 9).toFixed(2);
+        }
+      } else if (category === 'time') {
+        const seconds = parseFloat(secondsInput.value) || 0;
+        const minutes = parseFloat(minutesInput.value) || 0;
+        if (type === 'S') {
+          minutesInput.value = (seconds / 60).toFixed(2);
+        } else if (type === 'M') {
+          secondsInput.value = (minutes * 60).toFixed(0);
+        }
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Clone Increment-Decrement Div</title>
+  <style>
+    .counter {
+      margin: 10px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+  <button id="cloneButton">Clone Counter</button>
+  <div id="container"></div>
+<script>
+    let counterId = 0;
+    function createCounter() {
+      counterId++;
+
+      const counterDiv = document.createElement("div");
+      counterDiv.className = "counter";
+
+      const countLabel = document.createElement("span");
+      countLabel.textContent = "0";
+      countLabel.id = `count-${counterId}`;
+
+      const incrementButton = document.createElement("button");
+      incrementButton.textContent = "+";
+      incrementButton.onclick = function () {
+        const count = document.getElementById(`count-${counterId}`);
+        count.textContent = parseInt(count.textContent) + 1;
+      };
+      const decrementButton = document.createElement("button");
+      decrementButton.textContent = "-";
+      decrementButton.onclick = function () {
+        const count = document.getElementById(`count-${counterId}`);
+        count.textContent = parseInt(count.textContent) - 1;
+      };
+      counterDiv.appendChild(decrementButton);
+      counterDiv.appendChild(countLabel);
+      counterDiv.appendChild(incrementButton);
+
+      document.getElementById("container").appendChild(counterDiv);
+    }
+    document.getElementById("cloneButton").addEventListener("click", createCounter);
+  </script>
+</body>
+</html>

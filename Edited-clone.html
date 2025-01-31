@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clone and Append Lists</title>
+</head>
+<body>
+    <div class="list-container">
+          <ul id="list1">
+          <li>Milk</li>
+          <li>Coffee</li> <br> 
+          <li>Tea</li>
+          <li>Water</li>
+          <h3>Click the button to clone the last element</h3>
+        <ul id="list2"></ul>
+        </ul>
+      </div>
+      <button id="cloneButton">Try it</button>
+      <script>
+        const list1Element = document.getElementById("list1");
+        const list2Element = document.getElementById("list2");
+        const cloneButton = document.getElementById("cloneButton");
+        
+        cloneButton.addEventListener("click", function () {
+          const list1Items = list1Element.querySelectorAll("li");
+          if (list1Items.length > 0) 
+          {  
+            const lastItem = list1Items[list1Items.length - 1].textContent; 
+            const newListItem = document.createElement("li");
+            newListItem.textContent = lastItem;
+            const thirdItem = list1Items[2]; 
+            list1Element.insertBefore(newListItem, thirdItem); 
+          }
+        });
+      </script>
+</body>
+</html>
