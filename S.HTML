@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <title>Table Pagination & Sorting</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .sort-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            margin-left: 5px;
+        }
+        .pagination {
+            margin-top: 10px;
+            text-align: center;
+        }
+        .pagination button {
+            padding: 5px 10px;
+            margin: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Table with Pagination & Sorting</h2>
+    
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th>Name <button class="sort-btn" onclick="sortTable(0)">&#8657;&#8659;</button></th>
+                <th>Age <button class="sort-btn" onclick="sortTable(1)">&#8657;&#8659;</button></th>
+                <th>Country <button class="sort-btn" onclick="sortTable(2)">&#8657;&#8659;</button></th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+        </tbody>
+    </table>
+
+    <div class="pagination">
+        <button onclick="prevPage()">Previous</button>
+        <span id="pageNumber">1</span>
+        <button onclick="nextPage()">Next</button>
+    </div>
+</div>
+
+<script>
+    let data = [
+        ["Aneri", 25, "Rajkot"],
+        ["Sneha", 30, "Amreli"],
+        ["Krisha", 22, "Ahmdabad"],
+        ["Ayushi", 28, "Germany"],
+        ["Dhruvi", 26, "France"],
+        ["Dhara", 29, "Spain"],
+        ["Prushti", 31, "Netherlands"],
+        ["Isha", 24, "Australia"],
+        ["Yashvi", 33, "Japan"],
+        ["Kanvi", 23, "Brazil"],
+        ["Ankita", 32, "Mexico"],
+        ["Nia", 29, "China"],
+        ["Manisha",14, "Botad"]
+    ];
+
+    let currentPage = 1;
+    const recordsPerPage = 5;
+    let currentSortColumn = null;
+    let sortOrder = 1; 
+    function displayTable() {
+        const tableBody = document.getElementById("tableBody");
+        tableBody.innerHTML = ""; 
+
+        const start = (currentPage - 1) * recordsPerPage;
+        const end = start + recordsPerPage;
+        const paginatedData = data.slice(start, end);
+
+        paginatedData.forEach(row => {
+            const tr = document.createElement("tr");
+            row.forEach(cell => {
+                const td = document.createElement("td");
+                td.textContent = cell;
+                tr.appendChild(td);
+            });
+            tableBody.appendChild(tr);
+        });
+
+        document.getElementById("pageNumber").textContent = currentPage;
+    }
+
+    function sortTable(columnIndex) {
+        if (currentSortColumn === columnIndex) {
+            sortOrder *= -1; 
+        } else {
+            currentSortColumn = columnIndex;
+            sortOrder = 1; 
+        }
+
+        data.sort((a, b) => {
+            if (typeof a[columnIndex] === "number") {
+                return (a[columnIndex] - b[columnIndex]) * sortOrder;
+            } else {
+                return a[columnIndex].localeCompare(b[columnIndex]) * sortOrder;
+            }
+        });
+
+        displayTable();
+    }
+
+    function nextPage() {
+        if (currentPage < Math.ceil(data.length / recordsPerPage)) {
+            currentPage++;
+            displayTable();
+        }
+    }
+
+    function prevPage() {
+        if (currentPage > 1) {
+            currentPage--;
+            displayTable();
+        }
+    }
+    displayTable();
+</script>
+
+</body>
+</html>
