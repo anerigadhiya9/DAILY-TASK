@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Clone Increment-Decrement Div</title>
+  <style>
+    .counter {
+      margin: 10px;
+      display: flex;          
+    }
+    button {
+      margin: 0 5px;
+    }
+  </style>
+</head>
+<body>
+  <button onclick="cloneCounter(0)">Clone</button>
+  <div id="container">
+    <div class="counter">
+      <button onclick="decrement(this)">-</button>
+      <div><span class="count">0</span></div>
+      <button onclick="increment(this)">+</button>
+    </div>
+  </div>
+  <script>
+    function increment(button) {
+      let countSpan = button.parentNode.querySelector(".count");
+      countSpan.textContent = parseInt(countSpan.textContent) + 1;
+    }
+
+    function decrement(button) {
+      let countSpan = button.parentNode.querySelector(".count");
+      countSpan.textContent = parseInt(countSpan.textContent) - 1;
+    }
+
+    function cloneCounter(initialValue) {
+      const container = document.getElementById("container");
+      const newCounter = container.firstElementChild.cloneNode(true);  
+
+      newCounter.querySelector(".count").textContent = initialValue;   
+      const buttons = newCounter.querySelectorAll('button');
+      container.appendChild(newCounter);  
+    }
+  </script>
+</body>
+</html>

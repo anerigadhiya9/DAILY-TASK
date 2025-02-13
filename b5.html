@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Clone Increment-Decrement Div</title>
+  <style>
+    .counter {
+      display: flex;
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <button onclick="cloneCounter(0)">Clone</button>
+  <div id="container">
+    <div class="counter" id="counter-0">
+      <button id="dec-0" onclick="decrement(this.id)">-</button>
+      <div><span id="count-0">0</span></div>
+      <button id="inc-0" onclick="increment(this.id)">+</button>
+    </div>
+  </div>
+
+  <script>
+    let counterId = 1;
+
+    function increment(buttonId) {
+      let countId = buttonId.replace("inc-", "count-");
+      let countSpan = document.getElementById(countId);
+      countSpan.textContent = parseInt(countSpan.textContent) + 1;
+    }
+
+    function decrement(buttonId) {
+      let countId = buttonId.replace("dec-", "count-");
+      let countSpan = document.getElementById(countId);
+      countSpan.textContent = parseInt(countSpan.textContent) - 1;
+    }
+
+    function cloneCounter(initialValue) {
+      const container = document.getElementById("container");
+      const originalCounter = document.getElementById("counter-0");
+      const newCounter = originalCounter.cloneNode(true);
+      
+      newCounter.id = "counter-" + counterId;
+      
+      const decButton = newCounter.getElementsByTagName("button")[0];
+      const countSpan = newCounter.getElementsByTagName("span")[0];
+      const incButton = newCounter.getElementsByTagName("button")[1];
+ 
+      decButton.id = "dec-" + counterId;
+      incButton.id = "inc-" + counterId;
+      countSpan.id = "count-" + counterId;
+
+      decButton.setAttribute("onclick", "decrement('" + decButton.id + "')");
+      incButton.setAttribute("onclick", "increment('" + incButton.id + "')");
+
+      countSpan.textContent = initialValue;
+
+      container.appendChild(newCounter);
+      counterId++;
+    }
+  </script>
+</body>
+</html>
